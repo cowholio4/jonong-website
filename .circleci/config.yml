@@ -30,48 +30,32 @@ jobs:
             - build
             - vendor/bundle
 
-  deploy:
-    parallelism: 1
-    docker:
-      - image: cimg/ruby:4.0.1-node
-    steps:
-      - checkout
-
-      - attach_workspace:
-          at: .
-
-      - run: gem install bundler -v "$(tail -1 Gemfile.lock | tr -d ' ')"
-
-      - run: bundle config set path 'vendor/bundle'
-
-      - run: 'bundle check || bundle install --jobs=4 --retry=3'
-
-      - run: npm ci
-
-      # Authenticate to AWS via OIDC, scoped to s3 sync on www-cowholio4-com.
-      # Must run before any middleman command, since config.rb evaluates
-      # AWS credentials on every invocation, not just s3_sync.
-      - aws-cli/install
-      - aws-cli/setup:
-          role_arn: 'arn:aws:iam::695264346902:role/circleci-oidc-www-cowholio4-com-s3-sync'
-          region: 'us-west-2'
-
-      # Distribute to s3 with middleman
-      - run: bundle exec middleman s3_sync --environment=build
-
-      # ping google
-      - run: curl http://www.bing.com/webmaster/ping.aspx?siteMap=https://www.cowholio4.com/sitemap.xml || true
-      - run: curl http://www.google.com/webmasters/sitemaps/ping?sitemap=https://www.cowholio4.com/sitemap.xml || true
+  # TODO: deploy job disabled after migrating this codebase from
+  # cowholio4-website. The old job authenticated to cowholio4's own AWS
+  # account/role and synced to cowholio4's production S3 bucket — pointing
+  # this repo's CI at real AWS credentials without changing the role ARN
+  # and bucket first would overwrite cowholio4.com. Re-enable once a real
+  # bucket, OIDC role, and host are configured in config.rb.
+  #
+  # deploy:
+  #   parallelism: 1
+  #   docker:
+  #     - image: cimg/ruby:4.0.1-node
+  #   steps:
+  #     - checkout
+  #     - attach_workspace:
+  #         at: .
+  #     - run: gem install bundler -v "$(tail -1 Gemfile.lock | tr -d ' ')"
+  #     - run: bundle config set path 'vendor/bundle'
+  #     - run: 'bundle check || bundle install --jobs=4 --retry=3'
+  #     - run: npm ci
+  #     - aws-cli/install
+  #     - aws-cli/setup:
+  #         role_arn: 'TODO-set-jonong-website-oidc-role-arn'
+  #         region: 'us-west-2'
+  #     - run: bundle exec middleman s3_sync --environment=build
 workflows:
   version: 2
   build-and-deploy:
     jobs:
       - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only:
-                - main
-                - master

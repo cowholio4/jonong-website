@@ -34,70 +34,29 @@ activate :asset_hash do |asset_hash|
 end
 activate :meta_tags
 
-
-activate :blog do |blog|
-  # set options on blog
-  blog.layout = 'blog_layout'
-  blog.permalink = "/blog/:year/:month/:day/:title.html"
-  blog.sources = "blog/:year-:month-:day-:title.html"
-  blog.summary_separator = /SPLIT_SUMMARY_BEFORE_THIS/
-  # blog.publish_future_dated = true
-  blog.custom_collections = {
-    category: {
-      link: "/blog/categories/:category.html",
-      template: "/category.html"
-    }
-  }
-end
-
 activate :directory_indexes
-
-# redirect "/photo_albums/11_207822968", to: "/photo_albums/instagram"
-instagram_photos = @app.data.photos.data.select{|x| x['attributes']['user_url'] == 'https://instagram.com/cowholio4'}
-
-proxy "/photo_albums.html", "/templates/photo_album.html", :locals => {photos: instagram_photos} 
-instagram_photos.each do |photo|
-  proxy "/photo_albums/instagram/photos/11_#{photo['attributes']['vendor_id']}.html", "/templates/photo.html", :locals => { photo: photo['attributes'] }
-  proxy "/photo_albums/11_207822968/photos/11_#{photo['attributes']['vendor_id']}.html", "/templates/photo.html", :locals => { photo: photo['attributes'] }
-end
-
-
-ignore "/templates/*"
-
 activate :gzip
-page "/feed.xml", layout: false
 
-# AWS credentials are only available on branches that deploy (see
-# .circleci/config.yml). A plain `middleman build` never touches s3_sync, so
-# fall back to nil rather than raising when no credentials are configured.
-aws_credentials = if ENV.has_key? 'AWS_ACCESS_KEY_ID'
-  Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY'], ENV['AWS_SESSION_TOKEN'])
-else
-  begin
-    Aws::SharedCredentials.new().credentials
-  rescue Aws::Errors::NoSuchProfileError
-    nil
-  end
-end
-
-activate :s3_sync do |s3_sync|
-  s3_sync.bucket = 'www-cowholio4-com'
-  s3_sync.region = 'us-west-2'     # The AWS region for your bucket.
-  s3_sync.index_document = 'index.html'
-  s3_sync.error_document = '404.html'
-  s3_sync.prefer_gzip = true
-  s3_sync.aws_access_key_id = aws_credentials&.access_key_id
-  s3_sync.aws_secret_access_key = aws_credentials&.secret_access_key
-  s3_sync.aws_session_token = aws_credentials&.session_token
-  s3_sync.delete = false
-end
-
-default_caching_policy max_age:(60 * 60 * 24 * 365)
-caching_policy 'text/html', max_age: 0, must_revalidate: true
+# NOTE: s3_sync / CircleCI deploy are intentionally left unconfigured after
+# migrating this codebase from cowholio4-website. Set a real bucket, AWS
+# OIDC role, and host below (and in .circleci/config.yml) before enabling
+# deploys — the previous values pointed at cowholio4's production bucket.
+#
+# activate :s3_sync do |s3_sync|
+#   s3_sync.bucket = 'TODO-set-jonong-website-bucket'
+#   s3_sync.region = 'us-west-2'
+#   s3_sync.index_document = 'index.html'
+#   s3_sync.error_document = '404.html'
+#   s3_sync.prefer_gzip = true
+#   s3_sync.delete = false
+# end
+#
+# default_caching_policy max_age:(60 * 60 * 24 * 365)
+# caching_policy 'text/html', max_age: 0, must_revalidate: true
 
 # Build-specific configuration
 configure :build do
-  config[:host] = "https://www.cowholio4.com"
+  config[:host] = "https://www.jonongmusic.com"
 
   # Minify CSS on build
   # activate :minify_css

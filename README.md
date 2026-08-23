@@ -21,16 +21,7 @@ bundle install
 bundle exec middleman server --bind-address=0.0.0.0 -p 3000
 ```
 
-# Publishing a blog guidelines
-
-## Frontmatter
-
-Every post needs `title`, `date`, `description`, and `author: Jason Pope`. If an AI model was used to help write the post, add `ai_model:` with the model name (e.g. `Claude Sonnet 5`) — omit the field entirely for posts written without AI assistance.
-
-## Check to make sure social media sharing previews look ok
-
-header - the image for the header of the blog 960 x 221
-pull_image is the photo used in previews; must be at least 1200 (w) and 627 (h) pixels
+# Check to make sure social media sharing previews look ok
 
 https://www.linkedin.com/help/linkedin/answer/46687/making-your-website-shareable-on-linkedin?lang=en
 

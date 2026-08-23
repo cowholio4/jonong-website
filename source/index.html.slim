@@ -1,14 +1,33 @@
 ---
-page_title: "Not quite sure."
+page_title: "Jon Ong - Composer"
 ---
-.max-w-3xl.mx-auto.px-4
-  - article = blog.articles.first
-  section.mt-5
-    .card.bg-base-100.shadow-sm
-      .card-body
-        h2.card-title=link_to article.title, article
-        p.text-base-content/70.text-sm =article.date.strftime('%b %e, %Y')
-        .prose.max-w-none.mt-4
-          = article.summary
-        .card-actions.mt-4
-          =link_to "Read More", article, class: 'btn btn-primary w-full'
+.relative
+  div class="h-screen bg-cover bg-center grayscale" style="background-image:url(#{image_path('jon-ong-hero.jpg')})"
+  div class="absolute inset-0 pointer-events-none" style="background-color:#03738C;opacity:0.1"
+  div class="md:absolute md:inset-0 md:flex md:items-end md:justify-end"
+    div class="mx-4 md:mx-16 md:mb-16 -mt-1 md:mt-0 max-w-[420px] md:w-[420px] bg-[#FAFBFD] p-[30px] text-center" style="box-shadow:5px 5px 0 0 #000"
+      h1 class="text-[28px] font-extrabold uppercase tracking-[3px]" JON ONG
+      div class="w-[100px] h-[2px] bg-primary mx-auto my-4"
+      p class="text-[17px]" style="color:#333333" Composer
+      .mt-6
+        a class="btn btn-primary font-normal rounded-none px-[25px] py-[10px]" href="mailto:contact@jonongmusic.com" GET IN TOUCH
+
+div class="max-w-[1200px] mx-auto px-[30px]"
+  section.mt-20.md:mt-32
+    div class="flex flex-col md:flex-row gap-10 md:gap-12 md:items-center"
+      div class="md:basis-[55%]"
+        h2 class="flex items-center gap-[10px] text-[28px] font-bold tracking-[3px] uppercase"
+          span class="inline-block w-[50px] h-[2px] bg-primary"
+          | HELLO
+        div.mt-6.space-y-6
+          p Jon Ong is a Singaporean composer and multi-instrumentalist with over 13 years of experience in film, TV, and commercials. He composed the score for <em>The Accidental Getaway Driver</em>, directed by Sing J. Lee, who won the 2023 Sundance U.S. Dramatic Award for Best Director. The film had its theatrical release in 2025. Jon also scored <em>Border Hopper</em>, a 2024 Sundance selection directed by Nico Casavecchia.
+          p Jon's extensive film credits include additional music for the two-time BAFTA-nominated <em>Paddington</em>, <em>The Family Plan 2</em> starring Mark Wahlberg and Michelle Monaghan, <em>Love The Coopers</em> starring Diane Keaton and Timothée Chalamet, <em>Whiskey Tango Foxtrot</em> and the Cinema Eye Honors-nominated <em>17 Blocks</em>.
+          p In TV, Jon has contributed additional music to <em>The Dinosaurs</em>, <em>The Wheel of Time</em>, <em>Life on Our Planet</em>, <em>Dopesick</em>, <em>Joe vs. Carole</em>, and <em>His Dark Materials</em>. His versatility extends to national commercials, including scoring McDonald's <em>The Hamburglar</em>.
+          p Beyond film and TV scoring, Jon has composed music for <em>Chase Champion</em>, a Nickelodeon web series, written additional music for <em>Dragon Age: The Veilguard</em>, a video game, served as the conductor for the <em>Game Awards</em> (2021), and was an orchestrator for <em>Arthur Newman</em> and for Amazon's <em>The Dangerous Book for Boys</em>.
+          p Originally from Singapore and now based in Los Angeles, Jon began his music career as a guitarist before studying film scoring at Berklee College of Music. He has since worked alongside renowned composers Lorne Balfe, Nick Urata, and William Ross in his rise through the film scoring world in Los Angeles.
+      div class="md:basis-[40%]"
+        img class="w-full h-auto object-cover border-[5px] border-black rounded-[52px]" src=image_path('jon-ong-portrait.jpg') alt="Jon Ong"
+
+  section.mt-20.mb-24.text-center
+    h2.text-sm.font-semibold.uppercase.tracking-widest.text-primary jonongmusic
+    a.btn.btn-outline.btn-neutral.mt-4.rounded-none href="https://www.instagram.com/jonongmusic/" target="_blank" rel="noopener" Follow on Instagram

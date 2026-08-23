@@ -30,22 +30,31 @@ div class="max-w-[1200px] mx-auto px-[30px]"
 
   section.mt-20.mb-24
     h2.text-sm.font-semibold.uppercase.tracking-widest.text-primary.text-center jonongmusic
-    div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-1"
-      a class="aspect-square block overflow-hidden" href="https://www.instagram.com/reel/DV1kv9vkpff/" target="_blank" rel="noopener" title="I had the most fun working on this scene, using @lornebalfe brilliant themes as well as collaborating with the rest of the music team on making it all seamlessly fit together."
-        img class="w-full h-full object-cover hover:opacity-80 transition-opacity" src=image_path('ig-1.jpg') alt="I had the most fun working on this scene, using @lornebalfe brilliant themes..."
-      a class="aspect-square block overflow-hidden" href="https://www.instagram.com/reel/DVj1Fg3EliQ/" target="_blank" rel="noopener" title="It's Dino Day today. Thank you @lornebalfe for having me along on this epic adventure, and to the brilliant music team I got to work with."
-        img class="w-full h-full object-cover hover:opacity-80 transition-opacity" src=image_path('ig-2.jpg') alt="It's Dino Day today. Thank you @lornebalfe for having me along on this epic adventure..."
-      a class="aspect-square block overflow-hidden" href="https://www.instagram.com/p/DTrtamslAww/" target="_blank" rel="noopener" title="I'm thrilled to announce the release of a new project, and in conjunction with it, the official soundtrack of 'The Dedication' or 'Kenji' in Japanese."
-        img class="w-full h-full object-cover hover:opacity-80 transition-opacity" src=image_path('ig-3.jpg') alt="I'm thrilled to announce the release of a new project..."
-      a class="aspect-square block overflow-hidden" href="https://www.instagram.com/reel/DSA--n0E8CA/" target="_blank" rel="noopener" title="My hair was busy doing its own thing but if it gets your attention to voting for the Accidental Getaway Driver for the SCL David Raksin Emerging Talent Award, I'm all for it!!"
-        img class="w-full h-full object-cover hover:opacity-80 transition-opacity" src=image_path('ig-4.jpg') alt="My hair was busy doing its own thing but if it gets your attention to voting for the Accidental Getaway Driver..."
-      a class="aspect-square block overflow-hidden" href="https://www.instagram.com/p/DR6fenakWbE/" target="_blank" rel="noopener" title="For those of you who know me, will know how much of a journey it has been to this point of my career."
-        img class="w-full h-full object-cover hover:opacity-80 transition-opacity" src=image_path('ig-5.jpg') alt="For those of you who know me, will know how much of a journey it has been..."
-      a class="aspect-square block overflow-hidden" href="https://www.instagram.com/p/DR0w10yEdB1/" target="_blank" rel="noopener" title="And that's a wrap. Thanks for listening to all the music that I've had a pleasure to work and collaborate on."
-        img class="w-full h-full object-cover hover:opacity-80 transition-opacity" src=image_path('ig-6.jpg') alt="And that's a wrap. Thanks for listening to all the music..."
-      a class="aspect-square block overflow-hidden" href="https://www.instagram.com/p/DRtRmMeEQlA/" target="_blank" rel="noopener" title="Thank you @kevinmatley for having me along for the ride. Was fun writing Additional Music for this one."
-        img class="w-full h-full object-cover hover:opacity-80 transition-opacity" src=image_path('ig-7.jpg') alt="Thank you @kevinmatley for having me along for the ride..."
-      a class="aspect-square block overflow-hidden" href="https://www.instagram.com/p/DRS5krkEv_0/" target="_blank" rel="noopener" title="We made it on The Hollywood Reporter! Congrats to the whole team and our director @adriennelunson on the awards for our upcoming short 'The Dedication'"
-        img class="w-full h-full object-cover hover:opacity-80 transition-opacity" src=image_path('ig-8.jpg') alt="We made it on The Hollywood Reporter!..."
-    .text-center.mt-8
+    div id="ig-grid" class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-1"
+      - data.instagram.posts.each_with_index do |post, i|
+        a class="relative aspect-square block overflow-hidden group#{i >= 8 ? ' hidden' : ''}" href=post.href target="_blank" rel="noopener" title=post.cap
+          img class="w-full h-full object-cover group-hover:opacity-80 transition-opacity" loading="lazy" src=image_path(post.img) alt=post.cap
+          - if post.video
+            span class="absolute top-2 right-2 text-white drop-shadow"
+              svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="h-4 w-4 fill-current" aria-hidden="true" focusable="false"
+                path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"
+    .text-center.mt-8.flex.flex-wrap.justify-center.gap-3
+      button id="ig-load-more" type="button" class="btn btn-neutral rounded-none" Load More
       a.btn.btn-outline.btn-neutral.rounded-none href="https://www.instagram.com/jonongmusic/" target="_blank" rel="noopener" Follow on Instagram
+
+    javascript:
+      (function () {
+        var grid = document.getElementById('ig-grid');
+        var btn = document.getElementById('ig-load-more');
+        if (!grid || !btn) return;
+        var STEP = 8;
+        btn.addEventListener('click', function () {
+          var hidden = grid.querySelectorAll('a.hidden');
+          for (var i = 0; i < STEP && i < hidden.length; i++) {
+            hidden[i].classList.remove('hidden');
+          }
+          if (grid.querySelectorAll('a.hidden').length === 0) {
+            btn.parentNode.removeChild(btn);
+          }
+        });
+      })();

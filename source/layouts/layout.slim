@@ -12,7 +12,7 @@ html
     meta name="application-name" content="Jon Ong"
 
   
-    == stylesheet_link_tag "main"
+    link rel="stylesheet" href=site_path('main.css')
 
   body class="#{page_classes} min-h-screen flex flex-col" itemscope=true itemtype="http://schema.org/WebPage"
     = partial "navbar", locals:{static: true}
@@ -40,4 +40,4 @@ html
               path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"
         p.text-sm
          span.muted ©#{Time.now.year} Jon Ong Music
-    == javascript_include_tag "main", defer: 'defer'
+    script src=site_path('main.js') defer="defer"

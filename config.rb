@@ -30,7 +30,12 @@ page '404.html', directory_index: false
 
 activate :asset_hash do |asset_hash|
   asset_hash.sources = %w(.css .htm .html .js .php .xhtml .xml)
-  # asset_hash.ignore = "images/resources/*"
+  # main.css/main.js are built by external_pipeline (see below) and land at
+  # the site root as exactly "main.css"/"main.js" — asset_hash's rename
+  # would leave stylesheet_link_tag/javascript_include_tag pointing at a
+  # 404 since neither helper knows the externally-piped destination path.
+  # They're linked directly by filename in layout.slim, so keep them stable.
+  asset_hash.ignore = ['main.css', 'main.js']
 end
 activate :meta_tags
 

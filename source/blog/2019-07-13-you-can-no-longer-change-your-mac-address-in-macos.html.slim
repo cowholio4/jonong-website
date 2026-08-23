@@ -1,0 +1,27 @@
+---
+title: You can't change your MAC address on new Macs
+author: Jason Pope
+date: 2019-07-13 00:00 PST
+category: Troubleshooting
+description: For 2018/2019 Macbooks and iMacs you can no longer change the MAC address. 
+---
+.alert.alert-info
+  div
+    p Yay! This was fixed in the release of macOS Catalina.
+    p Replace the MAC address in the following command to whatever you want and it should work.
+    code $ sudo ifconfig en0 ether 00:80:48:ba:d1:30
+
+p For almost a year the ability to change the MAC address on MacBooks has been broken or disabled.
+| SPLIT_SUMMARY_BEFORE_THIS
+p I can't find any official statements from Apple clarifying but since this issue has persisted for so long I assume it is intentional. I really hope it's not.
+  
+
+ul
+  li
+    a href='https://forums.developer.apple.com/thread/106768' https://forums.developer.apple.com/thread/106768
+  li
+    a href='https://support.sweetpproductions.com/topic/404/wifi-spoof-not-working-on-new-macbook-2018' https://support.sweetpproductions.com/topic/404/wifi-spoof-not-working-on-new-macbook-2018
+  li
+    a href='https://github.com/halo/LinkLiar/issues/33' https://github.com/halo/LinkLiar/issues/33
+  li
+    a href='https://github.com/feross/SpoofMAC/issues/87' https://github.com/feross/SpoofMAC/issues/87

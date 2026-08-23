@@ -1,0 +1,19 @@
+<% pages = sitemap.resources.find_all{|p| 
+    p.source_file.present? &&
+    p.source_file.match(/\.html/) && !p.data.sitemap_noindex == true } %>
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<% pages.each do |p| %>
+<% 
+    if p.url == '/404.html'
+      next
+    end 
+%>
+
+  <url>
+    <loc>https://www.cowholio4.com<%=p.url.gsub('/index.html','')%></loc>
+    <changefreq>daily</changefreq>
+    <priority><%= p.data.sitemap_priority || 0.5 %></priority>
+  </url>
+<% end %>
+</urlset>

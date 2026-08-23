@@ -1,0 +1,16 @@
+{
+  "name": "cowholio4-website",
+  "private": true,
+  "scripts": {
+    "build": "node esbuild.config.cjs",
+    "build:css": "tailwindcss -i stylesheets/main.css -o builds/stylesheets/main.css --minify",
+    "watch:css": "tailwindcss -i stylesheets/main.css -o builds/stylesheets/main.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "@tailwindcss/typography": "^0.5.20",
+    "daisyui": "^5.7.20",
+    "esbuild": "0.25.9",
+    "tailwindcss": "^4.3.3"
+  }
+}

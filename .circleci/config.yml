@@ -1,0 +1,77 @@
+---
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@5.4
+
+jobs:
+  build:
+    parallelism: 1
+    docker:
+      - image: cimg/ruby:4.0.1-node
+    steps:
+      # Machine Setup
+      - checkout
+
+      - run: gem install bundler -v "$(tail -1 Gemfile.lock | tr -d ' ')"
+
+      - run: bundle config set path 'vendor/bundle'
+
+      - run: 'bundle check || bundle install --jobs=4 --retry=3'
+
+      - run: npm ci
+
+      # build website
+      - run: bundle exec middleman build
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - build
+            - vendor/bundle
+
+  deploy:
+    parallelism: 1
+    docker:
+      - image: cimg/ruby:4.0.1-node
+    steps:
+      - checkout
+
+      - attach_workspace:
+          at: .
+
+      - run: gem install bundler -v "$(tail -1 Gemfile.lock | tr -d ' ')"
+
+      - run: bundle config set path 'vendor/bundle'
+
+      - run: 'bundle check || bundle install --jobs=4 --retry=3'
+
+      - run: npm ci
+
+      # Authenticate to AWS via OIDC, scoped to s3 sync on www-cowholio4-com.
+      # Must run before any middleman command, since config.rb evaluates
+      # AWS credentials on every invocation, not just s3_sync.
+      - aws-cli/install
+      - aws-cli/setup:
+          role_arn: 'arn:aws:iam::695264346902:role/circleci-oidc-www-cowholio4-com-s3-sync'
+          region: 'us-west-2'
+
+      # Distribute to s3 with middleman
+      - run: bundle exec middleman s3_sync --environment=build
+
+      # ping google
+      - run: curl http://www.bing.com/webmaster/ping.aspx?siteMap=https://www.cowholio4.com/sitemap.xml || true
+      - run: curl http://www.google.com/webmasters/sitemaps/ping?sitemap=https://www.cowholio4.com/sitemap.xml || true
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - main
+                - master

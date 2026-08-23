@@ -1,0 +1,4 @@
+#!/bin/bash
+
+bundle exec middleman server --bind-address=0.0.0.0 -p 3000
+

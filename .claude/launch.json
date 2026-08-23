@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "middleman-server",
+      "runtimeExecutable": "env",
+      "runtimeArgs": ["LANG=en_US.UTF-8", "LC_ALL=en_US.UTF-8", "bundle", "exec", "middleman", "server", "--port", "4568"],
+      "port": 4568
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+---
+page_title: "Not quite sure."
+---
+.max-w-3xl.mx-auto.px-4
+  - article = blog.articles.first
+  section.mt-5
+    .card.bg-base-100.shadow-sm
+      .card-body
+        h2.card-title=link_to article.title, article
+        p.text-base-content/70.text-sm =article.date.strftime('%b %e, %Y')
+        .prose.max-w-none.mt-4
+          = article.summary
+        .card-actions.mt-4
+          =link_to "Read More", article, class: 'btn btn-primary w-full'

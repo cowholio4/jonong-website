@@ -1,0 +1,4 @@
+.columns-1.sm:columns-2.md:columns-3.lg:columns-4.gap-1.px-4
+  - photos.each do | photo |
+    a.block href="/photo_albums/instagram/photos/11_#{photo['attributes'].vendor_id}"
+      img.w-full.h-auto.mb-1 src=photo['attributes'].media

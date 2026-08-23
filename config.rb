@@ -56,7 +56,15 @@ activate :gzip
 
 # Build-specific configuration
 configure :build do
-  config[:host] = "https://www.jonongmusic.com"
+  # GitHub Pages serves this repo at /jonong-website/ until a custom domain
+  # is pointed at it (see .github/workflows/pages.yml, which sets GH_PAGES=true).
+  # Switch config[:host] to the real domain and drop http_prefix once that happens.
+  if ENV['GH_PAGES']
+    config[:host] = "https://cowholio4.github.io"
+    config[:http_prefix] = "/jonong-website/"
+  else
+    config[:host] = "https://www.jonongmusic.com"
+  end
 
   # Minify CSS on build
   # activate :minify_css
@@ -74,5 +82,9 @@ end
 helpers do
   def image_url(source)
     config[:host] + image_path(source)
+  end
+
+  def site_path(path)
+    File.join(config[:http_prefix] || '/', path)
   end
 end

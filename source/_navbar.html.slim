@@ -10,32 +10,32 @@ nav.bg-base-100
             path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"
         ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 z-1 mt-3 w-52 p-2 shadow"
           li
-            a href="/" Home
+            a href=site_path('/') Home
           li
-            a href="/press" class=(press_active ? 'menu-active' : nil)
+            a href=site_path('/press') class=(press_active ? 'menu-active' : nil)
               | Press
               - if press_active
                 span.sr-only  (current)
           li
-            a href="/music" class=(music_active ? 'menu-active' : nil)
+            a href=site_path('/music') class=(music_active ? 'menu-active' : nil)
               | Music
               - if music_active
                 span.sr-only  (current)
       ul class="menu menu-horizontal px-1 hidden lg:flex text-[20px] font-normal gap-1"
         li
-          a href="/" Home
+          a href=site_path('/') Home
         li
-          a href="/press" class=(press_active ? 'menu-active' : nil)
+          a href=site_path('/press') class=(press_active ? 'menu-active' : nil)
             | Press
             - if press_active
               span.sr-only  (current)
         li
-          a href="/music" class=(music_active ? 'menu-active' : nil)
+          a href=site_path('/music') class=(music_active ? 'menu-active' : nil)
             | Music
             - if music_active
               span.sr-only  (current)
     .navbar-center
-      a class="text-[23px] font-bold uppercase tracking-[3px]" href="/" JON ONG
+      a class="text-[23px] font-bold uppercase tracking-[3px]" href=site_path('/') JON ONG
     .navbar-end.gap-2
       a.btn.btn-circle.btn-sm.btn-neutral href="https://www.instagram.com/jonongmusic/" target="_blank" rel="noopener" aria-label="Instagram"
         svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="h-3.5 w-3.5 fill-current" aria-hidden="true" focusable="false"

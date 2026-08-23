@@ -1,5 +1,7 @@
 @import "tailwindcss";
-@plugin "daisyui";
+@plugin "daisyui" {
+  themes: jonong --default;
+}
 @plugin "@tailwindcss/typography";
 
 @source "../source";

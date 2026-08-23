@@ -35,7 +35,10 @@ nav.bg-base-100
             - if music_active
               span.sr-only  (current)
     .navbar-center
-      a class="text-[23px] font-bold uppercase tracking-[3px]" href=site_path('/') JON ONG
+      a class="text-[23px] font-bold uppercase tracking-[3px] leading-tight text-center" href=site_path('/')
+        span.block.md:inline JON
+        span.hidden.md:inline &nbsp;
+        span.block.md:inline ONG
     .navbar-end.gap-2
       a.btn.btn-circle.btn-sm.btn-neutral href="https://www.instagram.com/jonongmusic/" target="_blank" rel="noopener" aria-label="Instagram"
         svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="h-3.5 w-3.5 fill-current" aria-hidden="true" focusable="false"
